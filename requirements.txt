@@ -1,4 +1,4 @@
-requirements.txtstreamlit
+streamlit
 langchain>=0.2.0
 langchain-openai
 langchain-core
