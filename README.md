@@ -5,7 +5,7 @@ colorFrom: blue
 colorTo: green
 sdk: streamlit
 sdk_version: 1.36.0 # Or your exact Streamlit version
-app_file: app.py
+app_file: src/streamlit_app.py 
 ---
 
 # PlatePilot - Your AI Meal Plan Assistant
