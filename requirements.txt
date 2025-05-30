@@ -11,5 +11,5 @@ accelerate>=0.30.0
 bitsandbytes>=0.43.0
 sentence-transformers>=2.7.0
 huggingface-hub
-searchapi-python
+searchapi
 tiktoken
