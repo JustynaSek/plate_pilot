@@ -10,3 +10,4 @@ dependencies:
   - langchain-chroma
   - streamlit
   - chromadb
+  - duckduckgo-search
