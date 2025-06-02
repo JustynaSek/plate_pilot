@@ -4,7 +4,7 @@ emoji: 🍽️
 colorFrom: blue
 colorTo: green
 sdk: docker
-app_file: src/streamlit_app.py 
+app_file: src/test_app.py 
 python_version: "3.12"
 ---
 
