@@ -40,8 +40,7 @@ ENV PYTHONPATH="/app/src:${PYTHONPATH}"
 EXPOSE 8501
 
 # Healthcheck for monitoring container status
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
-
+HEALTHCHECK --interval=30s --timeout=30s --start-period=60s --retries=5 CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 # Command to run your Streamlit app
 # Ensure the port matches EXPOSE and HEALTHCHECK
 ENTRYPOINT ["streamlit", "run", "src/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
