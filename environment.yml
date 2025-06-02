@@ -1,0 +1,12 @@
+name: platepilot_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.6
+  - langchain
+  - langchain-openai
+  - langchain-core
+  - langchain-community
+  - langchain-chroma
+  - streamlit
+  - chromadb
