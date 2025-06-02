@@ -5,7 +5,6 @@
 from langchain_community.tools import DuckDuckGoSearchRun # New import for DuckDuckGo
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.tools import Tool
-import os
 from langchain import hub
 from llm_config import llm_agent 
 

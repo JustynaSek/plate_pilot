@@ -1,6 +1,6 @@
-from prompts.meal_plan_chat_prompt import MEAL_PLAN_CHAT_PROMPT
-from prompts.meal_plan_modification_chat_prompt import MEAL_PLAN_MODIFICATION_CHAT_PROMPT
-from prompts.dessert_recipe_agent_prompt import DESSERT_RECIPE_AGENT_PROMPT
+from .prompts.meal_plan_chat_prompt import MEAL_PLAN_CHAT_PROMPT
+from .prompts.meal_plan_modification_chat_prompt import MEAL_PLAN_MODIFICATION_CHAT_PROMPT
+from .prompts.dessert_recipe_agent_prompt import DESSERT_RECIPE_AGENT_PROMPT
 
 class MealPlanAdvisor:
     def __init__(self, llm, retriever, conversation_memory, previous_meal_plan_memory, agent_executor):

@@ -3,9 +3,9 @@ title: PlatePilot - Your AI Meal Plan Assistant
 emoji: 🍽️
 colorFrom: blue
 colorTo: green
-sdk: streamlit
-sdk_version: 1.36.0 # Or your exact Streamlit version
+sdk: docker
 app_file: src/streamlit_app.py 
+python_version: "3.12"
 ---
 
 # PlatePilot - Your AI Meal Plan Assistant

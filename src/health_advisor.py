@@ -1,5 +1,4 @@
-# langchain_logic/core/health_advisor.py
-from prompts.health_tips_chat_prompt import HEALTH_TIPS_PROMPT, QWEN_SYSTEM_MESSAGE
+from .prompts.health_tips_chat_prompt import HEALTH_TIPS_PROMPT, QWEN_SYSTEM_MESSAGE
 from llm_config import qwen_tokenizer as global_qwen_tokenizer
 
 class HealthAdvisor:
