@@ -11,13 +11,17 @@ import streamlit as st # Import streamlit for caching
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 if not openai_api_key:
     st.error("OpenAI API key not found. Please set OPENAI_API_KEY as a Hugging Face Space secret.")
-  
+    print(f"DEBUG llm_config: OpenAI API key NOT loaded") # DEBUG print
+
+print(f"DEBUG llm_config: OpenAI API key loaded status: {bool(openai_api_key)}") # DEBUG print
+
 # --- OpenAI LLMs ---
 # Use st.cache_resource to avoid re-initializing these models on every Streamlit rerun
 @st.cache_resource
 def get_openai_llm(model_name: str, temperature: float = 0, max_tokens: int = None):
     """Initializes and caches an OpenAI ChatModel."""
     if not openai_api_key:
+        print(f"DEBUG llm_config: Skipping OpenAI model initialization for {model_name}: API key is missing (in func).")
         return None
     print(f"Initializing OpenAI model: {model_name}")
     return ChatOpenAI(
@@ -27,13 +31,17 @@ def get_openai_llm(model_name: str, temperature: float = 0, max_tokens: int = No
         max_tokens=max_tokens
     )
 
+print("DEBUG llm_config: Calling get_openai_llm for llm...")
 llm = get_openai_llm(model_name="gpt-4o-mini", temperature=0, max_tokens=500)
+print("DEBUG llm_config: Calling get_openai_llm for llm_memory...") # DEBUG print
 llm_memory = get_openai_llm(model_name="gpt-4o-mini") # temperature defaults to 0.7 if not set
+print("DEBUG llm_config: Calling get_openai_llm for llm_agent...") # DEBUG print
 llm_agent = get_openai_llm(model_name="ggpt-4o-mini", temperature=0)
 
 FINE_TUNED_MODEL_ID = "ft:gpt-4o-mini-2024-07-18:justyna-sek:plate-pilot:BaG94pm0"
+print("DEBUG llm_config: Calling get_openai_llm for llm_fine_tuned_gpt4o...") # DEBUG print
 llm_fine_tuned_gpt4o = get_openai_llm(model_name=FINE_TUNED_MODEL_ID, temperature=0)
-
+print("DEBUG llm_config: All OpenAI LLMs requested.")
 
 # --- Qwen Model Configuration and Loading ---
 QWEN_FINE_TUNED_MODEL_ID = "JustynaSek86/health-advisor-qwen-1-8b-chat-ft-merged"

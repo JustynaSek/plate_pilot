@@ -2,21 +2,30 @@
 import streamlit as st
 import os
 
+print("DEBUG streamlit_app: Starting app script execution.") # DEBUG print
+
 from meal_plan_advisor import MealPlanAdvisor
 from health_advisor import HealthAdvisor
-from llm_config import llm, llm_fine_tuned_gpt4o, llm_fine_tuned_qwen, qwen_tokenizer # Import qwen_tokenizer too
+from llm_config import llm, llm_fine_tuned_gpt4o, llm_fine_tuned_qwen, qwen_tokenizer 
 from memory_config import conversation_memory_summary, previous_meal_plan_memory
 from tools import agent_executor
 from retriever import retriever
 
+print("DEBUG streamlit_app: All module imports successful.") # DEBUG print
+
+print("DEBUG streamlit_app: Initializing MealPlanAdvisor...") # DEBUG print
 meal_plan_advisor = MealPlanAdvisor(llm, retriever, conversation_memory_summary, previous_meal_plan_memory, agent_executor)
-health_advisor = HealthAdvisor(llm_fine_tuned_gpt4o, llm_fine_tuned_qwen) # Removed qwen_tokenizer from HealthAdvisor's __init__ for now, see notes below
+print("DEBUG streamlit_app: MealPlanAdvisor initialized.") # DEBUG print
+
+print("DEBUG streamlit_app: Initializing HealthAdvisor...") # DEBUG print
+health_advisor = HealthAdvisor(llm_fine_tuned_gpt4o, llm_fine_tuned_qwen) # HealthAdvisor already prints debug msgs inside
+print("DEBUG streamlit_app: HealthAdvisor initialized.") # DEBUG print
 
 def main():
+    print("DEBUG streamlit_app: main() function started. Setting up UI.") # DEBUG print
     st.title("PlatePilot - Your AI Meal Plan Assistant")
     st.subheader("Personalized Meal Plans for You")
 
-    # Initialize session state for persistence
     if 'current_meal_plan' not in st.session_state:
         st.session_state['current_meal_plan'] = None
     if 'dessert_recipes' not in st.session_state:
@@ -38,7 +47,7 @@ def main():
         response = meal_plan_advisor.generate_meal_plan(user_name, dietary_restrictions, likes, dislikes)
         if response:
             st.session_state['current_meal_plan'] = response
-            st.session_state['dessert_recipes'] = None # Clear previous desserts
+            st.session_state['dessert_recipes'] = None
         else:
             st.error("Could not generate a recipe.")
 
@@ -59,12 +68,11 @@ def main():
                 )
                 if response:
                     st.session_state['current_meal_plan'] = response
-                    st.session_state['dessert_recipes'] = None # Clear previous desserts after modifying main plan
+                    st.session_state['dessert_recipes'] = None
                     st.rerun()
                 else:
                     st.error("Could not generate an improved recipe.")
 
-    # "Get Dessert Recipes" button is now independent
     if st.button("Get Dessert Recipes"):
         with st.spinner("Searching the web for dessert recipes..."):
             response_from_agent = meal_plan_advisor.generate_dessert_recipe(
@@ -76,7 +84,7 @@ def main():
                 st.error("Could not find dessert recipes using web search.")
 
     st.subheader("Health Tips")
-    col1, col2 = st.columns(2) # Use columns for side-by-side buttons
+    col1, col2 = st.columns(2)
 
     with col1:
         if st.button("Get Health Tips (GPT-4o Fine-tuned)"):
@@ -88,8 +96,6 @@ def main():
                     st.error("Could not generate health tips from GPT-4o.")
 
     with col2:
-        # Check if the Qwen LLM was successfully loaded from llm_config.py
-        # No need to import again here, it's already at the top.
         if llm_fine_tuned_qwen: 
             if st.button("Get Health Tips (Qwen Fine-tuned)"):
                 with st.spinner("Generating tips with Qwen..."):
@@ -99,7 +105,7 @@ def main():
                     else:
                         st.error("Could not generate health tips from Qwen.")
         else:
-            st.warning("Qwen Fine-tuned Model is not available. Please ensure HF_TOKEN is set and GPU is allocated.")
+            st.warning("Qwen Fine-tuned Model is not available. (Disabled for testing)")
 
 
     if st.session_state['dessert_recipes']:
@@ -107,4 +113,6 @@ def main():
         st.write(st.session_state['dessert_recipes'])
 
 if __name__ == "__main__":
+    print("DEBUG streamlit_app: Calling main() function block.") # DEBUG print
     main()
+    print("DEBUG streamlit_app: main() function completed. App should be ready.") # DEBUG print
