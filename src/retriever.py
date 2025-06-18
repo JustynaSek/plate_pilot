@@ -1,4 +1,3 @@
-# src/retriever.py
 import os
 import subprocess
 import sys
