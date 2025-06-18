@@ -52,22 +52,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Download the vector database:
-```bash
-# Install gdown if not already installed
-pip install gdown
-
-# Download the vector database
-gdown https://drive.google.com/uc?id=1E0D8l_RSFrv37QZvam9fiYpA8HQoVRIU
-
-# Extract the database
-# On Windows
-tar -xf vector_db.tar.gz -C data_processing/
-
-# On macOS/Linux
-tar -xzf vector_db.tar.gz -C data_processing/
-```
-
 ### Using uv (Faster Alternative)
 
 1. Install uv if you haven't already:
@@ -95,22 +79,6 @@ source venv/bin/activate
 4. Install dependencies using uv:
 ```bash
 uv pip install -r requirements.txt
-```
-
-5. Download the vector database:
-```bash
-# Install gdown if not already installed
-pip install gdown
-
-# Download the vector database
-gdown https://drive.google.com/uc?id=1E0D8l_RSFrv37QZvam9fiYpA8HQoVRIU
-
-# Extract the database
-# On Windows
-tar -xf vector_db.tar.gz -C data_processing/
-
-# On macOS/Linux
-tar -xzf vector_db.tar.gz -C data_processing/
 ```
 
 ## Configuration
