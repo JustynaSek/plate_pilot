@@ -1,13 +1,60 @@
-name: platepilot_env
+name: platepilot_env_stable_old_versions
 channels:
+  - pytorch           # Keep PyTorch's official channel first
   - conda-forge
+  - defaults
 dependencies:
-  - python=3.12.6
-  - langchain
-  - langchain-openai
-  - langchain-core
-  - langchain-community
-  - langchain-chroma
-  - streamlit
-  - chromadb
-  - duckduckgo-search
+  - python=3.10       # Keep Python pinned to 3.10
+  - pytorch           # Request the main PyTorch package
+  - cpuonly           # Ensure CPU-only build for local
+  # IMPORTANT: Removed the explicit 'torch=1.13.1' pin here
+  # This allows Conda to find a compatible PyTorch 1.x version available for python=3.10 that's stable.
+
+  - pip
+  - pip:
+    - streamlit==1.16.0 # Keep Streamlit pinned to an older, very stable version
+    - altair==4.2.0
+    - langchain               # Unpinned
+    - langchain-openai        # Unpinned
+    - langchain-core          # Unpinned
+    - langchain-community     # Unpinned
+    - langchain-chroma        # Unpinned
+    - chromadb                # Unpinned
+    - transformers            # Unpinned
+    - accelerate              # Unpinned
+    # - bitsandbytes            # REMAIN COMMENTED OUT FOR LOCAL CPU-ONLY
+    - sentence-transformers   # Unpinned
+    - huggingface-hub         # Unpinned
+    - duckduckgo-search       # Unpinned
+    - tiktoken                # Unpinned
+
+    # Add back other pip packages from your full list if they were here
+    # - python-dotenv
+    # - requests
+    # - numpy
+    # - pandas
+    # - scipy
+    # - jupyterlab
+    # - ipywidgets
+    # - matplotlib
+    # - scikit-learn
+    # - jupyter-dash
+    # - sentencepiece
+    # - pyarrow
+    # - faiss-cpu
+    # - beautifulsoup4
+    # - plotly
+    # - datasets
+    # - feedparser
+    # - twilio
+    # - pydub
+    # - openai # Assuming it's already there or you add it back from your full list
+    # - anthropic
+    # - google-generativeai
+    # - gradio
+    # - gensim
+    # - modal
+    # - ollama
+    # - psutil
+    # - setuptools
+    # - speedtest-cli

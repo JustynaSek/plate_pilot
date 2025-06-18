@@ -1,8 +1,5 @@
-# src/langchain_logic/core/tools.py
 
-# --- Imports ---
-# Remove: from langchain_community.utilities import SearchApiAPIWrapper
-from langchain_community.tools import DuckDuckGoSearchRun # New import for DuckDuckGo
+from langchain_community.tools import DuckDuckGoSearchRun
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.tools import Tool
 from langchain import hub
@@ -20,4 +17,6 @@ tools = [
 
 prompt = hub.pull("hwchase17/react")
 agent = create_react_agent(llm_agent, tools, prompt)
+
+__all__ = ['agent_executor']
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)

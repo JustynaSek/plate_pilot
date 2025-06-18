@@ -1,6 +1,5 @@
 import json
 import os
-import configparser
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
@@ -34,25 +33,22 @@ def load_and_process_recipes(filepath="recipes.json"):
             "likes": ", ".join(recipe['likes']),
             "dislikes": ", ".join(recipe['dislikes']),
         }
-        # print(f"Processing recipe, text: {text}")
-        # print(f"Processing recipe,Metadata: {metadata}")
         documents.append(Document(page_content=text, metadata=metadata))
-        # print(f"documens: {documents}")
     return documents
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
+# Hardcoded paths
+processed_recipes_file = 'data_processing/data/recipes_minimal.json'
+vector_db_dir = 'data_processing/vector_db'
 
-documents = load_and_process_recipes('data_processing/data/'+config['database']['processed_recipes_file'])
+documents = load_and_process_recipes(processed_recipes_file)
 
-embeddings = OpenAIEmbeddings(openai_api_key=os.environ.get("OPENAI_API_KEY"))  # Replace with your chosen embedding model
+embeddings = OpenAIEmbeddings(openai_api_key=os.environ.get("OPENAI_API_KEY"))
 
 try:
-    db_persist_dir = config['database']['persist_directory']
-    print(f"Persist directory from config: {db_persist_dir}")
-    vectorstore = Chroma.from_documents(documents, embeddings, persist_directory='data_processing/'+db_persist_dir)
-except KeyError as e:
-    print(f"Error: Section or key not found in config file: {e}")
+    print(f"Using vector DB directory: {vector_db_dir}")
+    vectorstore = Chroma.from_documents(documents, embeddings, persist_directory=vector_db_dir)
+except Exception as e:
+    print(f"Error creating vectorstore: {e}")
     vectorstore = None
 
 print("Vectorstore created successfully.", vectorstore)

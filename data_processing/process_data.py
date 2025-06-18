@@ -1,5 +1,4 @@
 import json
-import configparser
 from nltk.stem import WordNetLemmatizer
 import nltk
 
@@ -36,7 +35,6 @@ def download_nltk_resources():
         nltk.download('wordnet')
         print("NLTK WordNet corpus downloaded successfully.")
 
-
 def lemmatize_text(text):
     words = nltk.word_tokenize(text.lower())
     lemmatized_words = [lemmatizer.lemmatize(word) for word in words if word.isalnum()] # Keep only alphanumeric
@@ -60,16 +58,17 @@ def load_and_process_recipes_minimal(filepath):
     processed_recipes = [process_data(recipe) for recipe in recipes]
     return processed_recipes
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
+# Hardcoded paths
+recipes_file = "data_processing/data/recipes.json"
+minimal_recipes_file = "data_processing/data/recipes_minimal.json"
 
 download_nltk_resources()
 lemmatizer = WordNetLemmatizer()
 
-minimal_recipes = load_and_process_recipes_minimal("data_processing/data/"+config['database']['recipes_file'])
+minimal_recipes = load_and_process_recipes_minimal(recipes_file)
 
-# Save the minimal version without newlines (optional)
-with open("data_processing/data/recipes_minimal.json", "w") as f:
-    json.dump(minimal_recipes, f, indent=2) # You might want no indent for max size reduction
+# Save the minimal version without newlines
+with open(minimal_recipes_file, "w") as f:
+    json.dump(minimal_recipes, f, indent=2)
 
 print(json.dumps(minimal_recipes[0], indent=2))
